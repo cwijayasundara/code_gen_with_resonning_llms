@@ -1,0 +1,10 @@
+mistralai
+python-dotenv
+langchain
+langchain-mistralai
+langchain-openai
+langchain-anthropic
+langchain-community
+streamlit
+langchain-groq
+langchain-google-genai
