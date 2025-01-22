@@ -24,7 +24,7 @@ o1_mini = init_chat_model('o1-mini',
                          streaming=True,
                          callbacks=[StreamingStdOutCallbackHandler()])
 
-gemini_2_0_flash = init_chat_model('gemini-2.0-flash-exp',
+gemini_2_0_flash = init_chat_model('gemini-2.0-flash-thinking-exp-01-21',
                               model_provider='google_genai',
                               temperature=0.5,
                               streaming=True,
@@ -52,7 +52,7 @@ DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
 
 base_url = "https://api.deepseek.com"
 
-deep_seek_3 = init_chat_model('deepseek-3',
+deep_seek_3 = init_chat_model('deepseek-reasoner',
                               model_provider='openai',
                               temperature=0.5,
                               streaming=True,
