@@ -34,6 +34,12 @@ o1 = init_chat_model('o1',
                          streaming=True,
                          callbacks=[StreamingStdOutCallbackHandler()])
 
+o3_mini = init_chat_model('o3-mini',
+                            model_provider='openai',
+                            temperature=1.0,
+                            streaming=True,
+                            callbacks=[StreamingStdOutCallbackHandler()])
+
 gemini_2_0_flash_thinking = init_chat_model('gemini-2.0-flash-thinking-exp-01-21',
                               model_provider='google_genai',
                               temperature=0.5,
@@ -98,6 +104,7 @@ with st.sidebar:
         'Select the LLM to be used!',
         ('o1_mini',
          'o1',
+         'o3_mini',
          'gemini_2_0_flash_thinking',
          'claude_3_5_sonnet',
          'mistral_codestral',
@@ -109,6 +116,8 @@ if add_radio == 'o1_mini':
     chains.set_llm(o1_mini)
 elif add_radio == 'o1':
     chains.set_llm(o1)
+elif add_radio == 'o3_mini':
+    chains.set_llm(o3_mini)
 elif add_radio == 'gemini_2_0_flash_thinking':
     chains.set_llm(gemini_2_0_flash_thinking)
 elif add_radio == 'claude_3_5_sonnet':
