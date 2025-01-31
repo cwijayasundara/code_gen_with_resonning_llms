@@ -13,7 +13,8 @@ client = OpenAI(api_key=DEEPSEEK_API_KEY, base_url=base_url)
 query = """ Whats aDS/CFT correspondence? """
 
 response = client.chat.completions.create(
-    model="deepseek-chat",
+    # model="deepseek-chat",
+    model = "deepseek-reasoner",
     messages=[
         {"role": "system", "content": "You are a helpful assistant"},
         {"role": "user", "content": query},

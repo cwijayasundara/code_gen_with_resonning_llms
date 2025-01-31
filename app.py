@@ -18,17 +18,43 @@ from chains import (
 
 load_dotenv()
 
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+
+base_url = "https://api.deepseek.com"
+
 o1_mini = init_chat_model('o1-mini',
                          model_provider='openai',
                          temperature=1.0,
                          streaming=True,
                          callbacks=[StreamingStdOutCallbackHandler()])
 
-gemini_2_0_flash = init_chat_model('gemini-2.0-flash-thinking-exp-01-21',
+o1 = init_chat_model('o1',
+                         model_provider='openai',
+                         temperature=1.0,
+                         streaming=True,
+                         callbacks=[StreamingStdOutCallbackHandler()])
+
+gemini_2_0_flash_thinking = init_chat_model('gemini-2.0-flash-thinking-exp-01-21',
                               model_provider='google_genai',
                               temperature=0.5,
                               streaming=True,
                               callbacks=[StreamingStdOutCallbackHandler()])
+
+deep_seek_r1 = init_chat_model('deepseek-reasoner',
+                              model_provider='openai',
+                              temperature=0.5,
+                              streaming=True,
+                              base_url=base_url,
+                              api_key=DEEPSEEK_API_KEY,
+                              callbacks=[StreamingStdOutCallbackHandler()])
+
+deep_seek_chat = init_chat_model('deepseek-chat',
+                                model_provider='openai',
+                                temperature=0.5,
+                                streaming=True,
+                                base_url=base_url,
+                                api_key=DEEPSEEK_API_KEY,
+                                callbacks=[StreamingStdOutCallbackHandler()])
 
 claude_3_5_sonnet = init_chat_model('claude-3-5-sonnet-20241022',
                                     model_provider='anthropic',
@@ -48,17 +74,7 @@ llama_3_3_groq = init_chat_model('llama-3.3-70b-versatile',
                                  streaming=True,
                                  callbacks=[StreamingStdOutCallbackHandler()])
 
-DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
 
-base_url = "https://api.deepseek.com"
-
-deep_seek_3 = init_chat_model('deepseek-reasoner',
-                              model_provider='openai',
-                              temperature=0.5,
-                              streaming=True,
-                              base_url=base_url,
-                              api_key=DEEPSEEK_API_KEY,
-                              callbacks=[StreamingStdOutCallbackHandler()])
 
 st.title('Code Generator')
 
@@ -81,24 +97,30 @@ with st.sidebar:
     add_radio = st.radio(
         'Select the LLM to be used!',
         ('o1_mini',
-         'gemini_2_0_flash',
+         'o1',
+         'gemini_2_0_flash_thinking',
          'claude_3_5_sonnet',
          'mistral_codestral',
          'llama_3_3_groq',
-         'deep_seek_3'))  
+         'deep_seek_r1',
+         'deep_seek_chat'))  
      
 if add_radio == 'o1_mini':
     chains.set_llm(o1_mini)
-elif add_radio == 'gemini_2_0_flash':
-    chains.set_llm(gemini_2_0_flash)
+elif add_radio == 'o1':
+    chains.set_llm(o1)
+elif add_radio == 'gemini_2_0_flash_thinking':
+    chains.set_llm(gemini_2_0_flash_thinking)
 elif add_radio == 'claude_3_5_sonnet':
     chains.set_llm(claude_3_5_sonnet)
 elif add_radio == 'mistral_codestral':
     chains.set_llm(mistral_codestral)
 elif add_radio == 'llama_3_3_groq':
     chains.set_llm(llama_3_3_groq)
-elif add_radio == 'deep_seek_3':
-    chains.set_llm(deep_seek_3)
+elif add_radio == 'deep_seek_r1':
+    chains.set_llm(deep_seek_r1)
+elif add_radio == 'deep_seek_chat':
+    chains.set_llm(deep_seek_chat)
 
 request = st.text_area('Please Detail Your Desired Use Case for Code Generation! ', height=100)
 st.write('Generate a microservice to manage Trades. Use Redis as the DB.')
