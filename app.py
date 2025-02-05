@@ -46,6 +46,12 @@ gemini_2_0_flash_thinking = init_chat_model('gemini-2.0-flash-thinking-exp-01-21
                               streaming=True,
                               callbacks=[StreamingStdOutCallbackHandler()])
 
+gemini_2_0_pro = init_chat_model('gemini-2.0-pro-exp-02-05',
+                                model_provider='google_genai',
+                                temperature=0.5,
+                                streaming=True,
+                                callbacks=[StreamingStdOutCallbackHandler()])
+
 deep_seek_r1 = init_chat_model('deepseek-reasoner',
                               model_provider='openai',
                               temperature=0.5,
@@ -106,6 +112,7 @@ with st.sidebar:
          'o1',
          'o3_mini',
          'gemini_2_0_flash_thinking',
+         'gemini_2_0_pro',
          'claude_3_5_sonnet',
          'mistral_codestral',
          'llama_3_3_groq',
@@ -120,6 +127,8 @@ elif add_radio == 'o3_mini':
     chains.set_llm(o3_mini)
 elif add_radio == 'gemini_2_0_flash_thinking':
     chains.set_llm(gemini_2_0_flash_thinking)
+elif add_radio == 'gemini_2_0_pro':
+    chains.set_llm(gemini_2_0_pro)
 elif add_radio == 'claude_3_5_sonnet':
     chains.set_llm(claude_3_5_sonnet)
 elif add_radio == 'mistral_codestral':
